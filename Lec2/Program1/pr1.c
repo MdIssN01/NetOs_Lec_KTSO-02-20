@@ -1,5 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
+#include<errno.h>
 
 void main()
 {
@@ -17,7 +18,13 @@ void main()
 			for (i = 0; i < length; i++)
 				array[i] = i * i;
 	       	else
-	       		printf("Error: can't allocate memory");
+	       		if(errno == ENOMEM)
+			{
+				perror("Malloc error");
+				exit(2);
+			}
+			else
+				exit(3);
 	}
 
 	//Если переменная была инициализирована, то очищаем её
